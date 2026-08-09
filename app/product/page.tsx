@@ -21,7 +21,17 @@ export default function AddProductPage() {
         </Link>
         <h1 className="text-base font-bold text-slate-800 dark:text-slate-100">ลงประกาศขายสินค้า</h1>
         <ThemeToggle />
-      </header>
+      <header className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4">
+  <div className="flex items-center gap-3">
+    <Link href="/home" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">
+      ← ย้อนกลับ
+    </Link>
+    <h1 className="text-base font-bold text-slate-800 dark:text-slate-100">
+      ลงประกาศขายสินค้า
+    </h1>
+  </div>
+  <ThemeToggle />
+</header>
 
       <form onSubmit={handleSubmit} className="p-6 space-y-4">
         <div>

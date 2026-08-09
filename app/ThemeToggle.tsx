@@ -1,23 +1,29 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 
 export default function ThemeToggle() {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
+    // ตรวจสอบธีมปัจจุบันจากหน้าจอ
+    const isDark = document.documentElement.classList.contains('dark');
+    setDarkMode(isDark);
+  }, []);
+
+  const toggleTheme = () => {
     if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
       document.documentElement.classList.remove('dark');
+      setDarkMode(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      setDarkMode(true);
     }
-  }, [darkMode]);
+  };
 
   return (
     <button
-      type="button"
-      onClick={() => setDarkMode(!darkMode)}
-      className="px-3 py-1.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-yellow-400 text-xs font-semibold border border-slate-300 dark:border-slate-700 shadow-sm active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
+      onClick={toggleTheme}
+      className="px-3 py-1.5 text-xs rounded-full border border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-1.5 transition-colors"
     >
       {darkMode ? '☀️ Light' : '🌙 Dark'}
     </button>
