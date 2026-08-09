@@ -1,10 +1,13 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import ThemeToggle from '../../ThemeToggle';
 
-export default function ProductDetailPage() {
+function DetailContent() {
   const searchParams = useSearchParams();
 
   const title = searchParams.get('title') || 'สินค้าทั่วไป';
@@ -32,8 +35,6 @@ export default function ProductDetailPage() {
 
         {/* Detail Content */}
         <div className="p-5 flex flex-col gap-5 flex-1">
-          
-          {/* Icon & Title Box */}
           <div className="flex flex-col items-center text-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700/60">
             <div className="w-20 h-20 bg-white dark:bg-slate-800 rounded-2xl shadow-sm flex items-center justify-center text-4xl mb-3 border border-slate-200 dark:border-slate-700">
               {icon}
@@ -52,7 +53,6 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Description Box */}
           <div className="flex flex-col gap-1.5">
             <h2 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
               รายละเอียดสินค้า
@@ -62,7 +62,6 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Location & Contact Info */}
           <div className="flex flex-col gap-3">
             <div className="p-3.5 bg-blue-50/50 dark:bg-blue-950/30 rounded-xl border border-blue-100 dark:border-blue-900/40 flex items-start gap-3">
               <span className="text-base">📍</span>
@@ -80,7 +79,6 @@ export default function ProductDetailPage() {
               </div>
             </div>
           </div>
-
         </div>
 
         {/* Action Button */}
@@ -95,5 +93,17 @@ export default function ProductDetailPage() {
 
       </div>
     </main>
+  );
+}
+
+export default function ProductDetailPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 text-slate-500 text-xs">
+        กำลังโหลดข้อมูล...
+      </div>
+    }>
+      <DetailContent />
+    </Suspense>
   );
 }
