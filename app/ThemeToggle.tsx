@@ -5,7 +5,6 @@ export default function ThemeToggle() {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    // ตรวจสอบธีมปัจจุบันจากหน้าจอ
     const isDark = document.documentElement.classList.contains('dark');
     setDarkMode(isDark);
   }, []);
