@@ -68,10 +68,10 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-sky-50/50 dark:from-slate-950 dark:via-purple-950/10 dark:to-slate-900 flex flex-col items-center">
-      <div className="w-full max-w-md md:max-w-3xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl min-h-screen shadow-2xl flex flex-col pb-24 border-x border-pink-100/50 dark:border-purple-900/20">
+      <div className="w-full max-w-md md:max-w-3xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl min-h-screen shadow-2xl flex flex-col pb-28 border-x border-pink-100/50 dark:border-purple-900/20 relative">
         
         {/* Header */}
-        <header className="p-4 md:p-6 border-b border-pink-100 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-10">
+        <header className="p-4 md:p-6 border-b border-pink-100 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-20">
           <div className="flex items-center gap-3">
             <Link
               href="/"
@@ -120,11 +120,11 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* Floating Action Button */}
-        <div className="fixed bottom-6 w-full max-w-md md:max-w-3xl px-4 flex justify-center pointer-events-none">
+        {/* Floating Action Button - Fixed properly for mobile touch */}
+        <div className="fixed bottom-6 left-0 right-0 z-30 flex justify-center px-4">
           <Link
             href="/product"
-            className="pointer-events-auto px-6 py-3.5 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white text-xs md:text-sm font-bold rounded-full shadow-xl shadow-purple-500/30 flex items-center gap-2 transition-transform active:scale-95"
+            className="px-6 py-3.5 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white text-xs md:text-sm font-bold rounded-full shadow-xl shadow-purple-500/30 flex items-center gap-2 transition-transform active:scale-95 cursor-pointer"
           >
             <span>➕✨</span> ลงประกาศขายสินค้า
           </Link>
