@@ -4,7 +4,6 @@ import Link from 'next/link';
 import ThemeToggle from '../ThemeToggle';
 
 export default function HomePage() {
-  // ข้อมูลสินค้าตัวอย่าง 5 รายการ
   const products = [
     {
       id: 1,
@@ -13,6 +12,9 @@ export default function HomePage() {
       price: '250',
       seller: 'รุ่นพี่ปี 3',
       icon: '📚',
+      description: 'หนังสือมือหนึ่งอ่านเอง อ่านคนเดียว สภาพสะอาด ไม่มีรอยขีดเขียน ห่อปกใสเรียบร้อยครับ',
+      location: 'นัดรับตึกคณะ IT หรือโรงอาหารกลาง',
+      contact: 'Line: varisara_book',
     },
     {
       id: 2,
@@ -21,6 +23,9 @@ export default function HomePage() {
       price: '180',
       seller: 'เด็กเคมี',
       icon: '🥼',
+      description: 'ใส่ไปแล็บแค่ 2 ครั้ง ซักรีดสะอาดเรียบร้อย ไซส์ L รอบอก 42 นิ้ว กระดุมครบทุกเม็ด',
+      location: 'นัดรับหน้าตึกวิทยาศาสตร์',
+      contact: 'IG: chem_store',
     },
     {
       id: 3,
@@ -29,6 +34,9 @@ export default function HomePage() {
       price: '590',
       seller: 'น้องปี 1',
       icon: '🎧',
+      description: 'ใช้งานปกติ เสียงดี เบสแน่น แบตอึด อุปกรณ์ครบกล่องพร้อมสายชาร์จเดิม',
+      location: 'นัดรับหอพักนักศึกษาชาย',
+      contact: 'Tel: 089-123-4567',
     },
     {
       id: 4,
@@ -37,6 +45,9 @@ export default function HomePage() {
       price: '450',
       seller: 'วิศวะปี 2',
       icon: '🔢',
+      description: 'รุ่นยอดฮิตผ่านเกณฑ์สอบทุกสนาม หน้าจอชัดเจน ปุ่มกดนิ่ม ใช้งานได้เต็มระบบ',
+      location: 'นัดรับลานเกียร์ วิศวะ',
+      contact: 'Line: en_calc',
     },
     {
       id: 5,
@@ -45,6 +56,9 @@ export default function HomePage() {
       price: '1,200',
       seller: 'พี่หอพัก',
       icon: '🚲',
+      description: 'ปั่นนิ่ม ยางไม่รั่ว มีตะกร้าหน้าใส่ของได้ เหมาะกับการขับขี่ภายในมหาลัยมากๆ ครับ',
+      location: 'นัดรับหอพักใน',
+      contact: 'Line: dormitory_bike',
     },
   ];
 
@@ -66,9 +80,11 @@ export default function HomePage() {
         {/* Product List */}
         <div className="p-4 flex flex-col gap-3 flex-1">
           {products.map((item) => (
-            <div
+            <Link
               key={item.id}
-              className="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm flex items-center gap-3 hover:border-blue-500 transition-colors"
+              // ส่งข้อมูลผ่าน URL query parameters ง่ายๆ เพื่อให้หน้าดีเทลอ่านค่าได้ทันที
+              href={`/home/detail?title=${encodeURIComponent(item.title)}&category=${encodeURIComponent(item.category)}&price=${encodeURIComponent(item.price)}&seller=${encodeURIComponent(item.seller)}&icon=${encodeURIComponent(item.icon)}&desc=${encodeURIComponent(item.description)}&loc=${encodeURIComponent(item.location)}&contact=${encodeURIComponent(item.contact)}`}
+              className="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm flex items-center gap-3 hover:border-blue-500 dark:hover:border-blue-400 transition-all cursor-pointer active:scale-98"
             >
               <div className="w-14 h-14 bg-slate-100 dark:bg-slate-700 rounded-xl flex items-center justify-center text-2xl shrink-0">
                 {item.icon}
@@ -87,11 +103,12 @@ export default function HomePage() {
                   ฿{item.price}
                 </p>
               </div>
-            </div>
+              <div className="text-slate-400 text-sm">›</div>
+            </Link>
           ))}
         </div>
 
-        {/* Floating Action Button สำหรับไปหน้าเพิ่มสินค้า */}
+        {/* Floating Action Button */}
         <div className="fixed bottom-6 w-full max-w-md px-4 flex justify-center pointer-events-none">
           <Link
             href="/product"
