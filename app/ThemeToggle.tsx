@@ -1,30 +1,36 @@
 'use client';
+
 import { useState, useEffect } from 'react';
+import { useTheme } from 'next-themes';
 
 export default function ThemeToggle() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark');
-    setDarkMode(isDark);
+    setMounted(true);
   }, []);
 
+  if (!mounted) {
+    return (
+      <button className="px-3 py-1.5 text-xs rounded-full border border-slate-300 bg-slate-100 text-slate-800">
+        Loading...
+      </button>
+    );
+  }
+
+  const isDarkMode = theme === 'dark';
+
   const toggleTheme = () => {
-    if (darkMode) {
-      document.documentElement.classList.remove('dark');
-      setDarkMode(false);
-    } else {
-      document.documentElement.classList.add('dark');
-      setDarkMode(true);
-    }
+    setTheme(isDarkMode ? 'light' : 'dark');
   };
 
   return (
     <button
       onClick={toggleTheme}
-      className="px-3 py-1.5 text-xs rounded-full border border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-1.5 transition-colors"
+      className="px-3 py-1.5 text-xs rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
     >
-      {darkMode ? '☀️ Light' : '🌙 Dark'}
+      {isDarkMode ? '☀️ Light' : '🌙 Dark'}
     </button>
   );
 }
