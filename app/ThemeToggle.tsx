@@ -30,7 +30,8 @@ export default function ThemeToggle() {
       onClick={toggleTheme}
       className="px-3 py-1.5 text-xs rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
     >
-      {isDarkMode ? '☀️ Light' : '🌙 Dark'}
+      {/* สลับให้ตรงกัน: หน้ามืดแสดง 🌙 Dark, หน้าสว่างแสดง ☀️ Light */}
+      {isDarkMode ? '🌙 Dark' : '☀️ Light'}
     </button>
   );
 }
