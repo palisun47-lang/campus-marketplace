@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
-import ThemeToggle from '../../ThemeToggle';
+import ThemeToggle from '@/ThemeToggle';
 
 function DetailContent() {
   const searchParams = useSearchParams();
