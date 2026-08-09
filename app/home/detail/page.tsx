@@ -3,21 +3,31 @@
 export const dynamic = 'force-dynamic';
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { useEffect, useState } from 'react';
 import ThemeToggle from '../../ThemeToggle';
 
-function DetailContent() {
-  const searchParams = useSearchParams();
+export default function ProductDetailPage() {
+  const [product, setProduct] = useState<any>(null);
 
-  const title = searchParams.get('title') || 'สินค้าทั่วไป';
-  const category = searchParams.get('category') || 'ทั่วไป';
-  const price = searchParams.get('price') || '0';
-  const seller = searchParams.get('seller') || 'ไม่ระบุ';
-  const icon = searchParams.get('icon') || '📦';
-  const description = searchParams.get('desc') || 'ไม่มีรายละเอียดเพิ่มเติม';
-  const location = searchParams.get('loc') || 'นัดรับในมหาลัย';
-  const contact = searchParams.get('contact') || 'สอบถามผ่านระบบ';
+  useEffect(() => {
+    const saved = localStorage.getItem('currentProduct');
+    if (saved) {
+      setProduct(JSON.parse(saved));
+    }
+  }, []);
+
+  if (!product) {
+    return (
+      <main className="min-h-screen bg-slate-100 dark:bg-slate-950 flex flex-col items-center justify-center">
+        <div className="text-xs text-slate-500 dark:text-slate-400 flex flex-col items-center gap-3">
+          <p>กำลังโหลดข้อมูลสินค้า...</p>
+          <Link href="/home" className="text-blue-600 dark:text-blue-400 underline">
+            ← กลับหน้าหลัก
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-slate-100 dark:bg-slate-950 flex flex-col items-center">
@@ -37,19 +47,19 @@ function DetailContent() {
         <div className="p-5 flex flex-col gap-5 flex-1">
           <div className="flex flex-col items-center text-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700/60">
             <div className="w-20 h-20 bg-white dark:bg-slate-800 rounded-2xl shadow-sm flex items-center justify-center text-4xl mb-3 border border-slate-200 dark:border-slate-700">
-              {icon}
+              {product.icon}
             </div>
             <span className="px-2.5 py-1 text-[11px] font-medium bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 rounded-full mb-2">
-              {category}
+              {product.category}
             </span>
             <h1 className="text-base font-bold text-slate-800 dark:text-slate-100 mb-1">
-              {title}
+              {product.title}
             </h1>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              ผู้ขาย: <span className="font-semibold text-slate-700 dark:text-slate-300">{seller}</span>
+              ผู้ขาย: <span className="font-semibold text-slate-700 dark:text-slate-300">{product.seller}</span>
             </p>
             <div className="text-xl font-extrabold text-blue-600 dark:text-blue-400 mt-3">
-              ฿{price}
+              ฿{product.price}
             </div>
           </div>
 
@@ -58,7 +68,7 @@ function DetailContent() {
               รายละเอียดสินค้า
             </h2>
             <div className="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/60 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              {description}
+              {product.description}
             </div>
           </div>
 
@@ -67,7 +77,7 @@ function DetailContent() {
               <span className="text-base">📍</span>
               <div>
                 <p className="text-[11px] font-bold text-blue-900 dark:text-blue-300">สถานที่นัดรับ</p>
-                <p className="text-xs text-blue-700 dark:text-blue-400 mt-0.5">{location}</p>
+                <p className="text-xs text-blue-700 dark:text-blue-400 mt-0.5">{product.location}</p>
               </div>
             </div>
 
@@ -75,7 +85,7 @@ function DetailContent() {
               <span className="text-base">📞</span>
               <div>
                 <p className="text-[11px] font-bold text-emerald-900 dark:text-emerald-300">ช่องทางติดต่อผู้ขาย</p>
-                <p className="text-xs text-emerald-700 dark:text-emerald-400 mt-0.5">{contact}</p>
+                <p className="text-xs text-emerald-700 dark:text-emerald-400 mt-0.5">{product.contact}</p>
               </div>
             </div>
           </div>
@@ -93,17 +103,5 @@ function DetailContent() {
 
       </div>
     </main>
-  );
-}
-
-export default function ProductDetailPage() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 text-slate-500 text-xs">
-        กำลังโหลดข้อมูล...
-      </div>
-    }>
-      <DetailContent />
-    </Suspense>
   );
 }
