@@ -67,58 +67,58 @@ export default function HomePage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-100 dark:bg-slate-950 flex flex-col items-center">
-      <div className="w-full max-w-md bg-white dark:bg-slate-900 min-h-screen shadow-xl flex flex-col pb-20">
+    <main className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-sky-50/50 dark:from-slate-950 dark:via-purple-950/10 dark:to-slate-900 flex flex-col items-center">
+      <div className="w-full max-w-md md:max-w-3xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl min-h-screen shadow-2xl flex flex-col pb-24 border-x border-pink-100/50 dark:border-purple-900/20">
         
         {/* Header */}
-        <header className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-10">
+        <header className="p-4 md:p-6 border-b border-pink-100 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-10">
           <div>
-            <h1 className="text-base font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-              🛒 ตลาดนัดวิทยาลัย
+            <h1 className="text-base md:text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-400 dark:to-purple-400 flex items-center gap-2">
+              🛒✨ ตลาดนัดวิทยาลัยฟีลกู้ด
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400">สินค้าแนะนำ 5 รายการล่าสุด</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">สินค้าคัดพิเศษ น่ารัก น่าใช้ 5 รายการ</p>
           </div>
           <ThemeToggle />
         </header>
 
-        {/* Product List */}
-        <div className="p-4 flex flex-col gap-3 flex-1">
+        {/* Product List - Responsive Grid for Phone & iPad */}
+        <div className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
           {products.map((item) => (
             <Link
               key={item.id}
               href="/home/detail"
               onClick={() => handleSelectProduct(item)}
-              className="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm flex items-center gap-3 hover:border-blue-500 dark:hover:border-blue-400 transition-all cursor-pointer active:scale-98"
+              className="p-4 bg-white dark:bg-slate-800/80 border border-pink-100 dark:border-slate-700/80 rounded-3xl shadow-sm hover:shadow-md hover:border-pink-300 dark:hover:border-purple-500 transition-all cursor-pointer flex items-center gap-4 group active:scale-98"
             >
-              <div className="w-14 h-14 bg-slate-100 dark:bg-slate-700 rounded-xl flex items-center justify-center text-2xl shrink-0">
+              <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-purple-100 dark:from-slate-700 dark:to-slate-800 rounded-2xl flex items-center justify-center text-3xl shrink-0 group-hover:scale-105 transition-transform shadow-inner">
                 {item.icon}
               </div>
               <div className="flex-1 min-w-0">
-                <span className="inline-block px-2 py-0.5 text-[10px] font-medium bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 rounded-full mb-1">
+                <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold bg-pink-50 dark:bg-pink-950/60 text-pink-600 dark:text-pink-400 rounded-full mb-1">
                   {item.category}
                 </span>
-                <h2 className="text-xs font-semibold text-slate-800 dark:text-slate-100 truncate">
+                <h2 className="text-xs md:text-sm font-bold text-slate-800 dark:text-slate-100 truncate">
                   {item.title}
                 </h2>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   ผู้ขาย: {item.seller}
                 </p>
-                <p className="text-sm font-bold text-blue-600 dark:text-blue-400 mt-0.5">
+                <p className="text-sm md:text-base font-extrabold text-pink-600 dark:text-pink-400 mt-1">
                   ฿{item.price}
                 </p>
               </div>
-              <div className="text-slate-400 text-sm">›</div>
+              <div className="text-pink-400 text-lg group-hover:translate-x-1 transition-transform">›</div>
             </Link>
           ))}
         </div>
 
         {/* Floating Action Button */}
-        <div className="fixed bottom-6 w-full max-w-md px-4 flex justify-center pointer-events-none">
+        <div className="fixed bottom-6 w-full max-w-md md:max-w-3xl px-4 flex justify-center pointer-events-none">
           <Link
             href="/product"
-            className="pointer-events-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-full shadow-lg flex items-center gap-2 transition-transform active:scale-95"
+            className="pointer-events-auto px-6 py-3.5 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white text-xs md:text-sm font-bold rounded-full shadow-xl shadow-purple-500/30 flex items-center gap-2 transition-transform active:scale-95"
           >
-            <span>➕</span> ลงประกาศขายสินค้า
+            <span>➕✨</span> ลงประกาศขายสินค้า
           </Link>
         </div>
 
