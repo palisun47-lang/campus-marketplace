@@ -72,11 +72,19 @@ export default function HomePage() {
         
         {/* Header */}
         <header className="p-4 md:p-6 border-b border-pink-100 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-10">
-          <div>
-            <h1 className="text-base md:text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-400 dark:to-purple-400 flex items-center gap-2">
-              🛒✨ ตลาดนัดวิทยาลัยฟีลกู้ด
-            </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400">สินค้าคัดพิเศษ น่ารัก น่าใช้ 5 รายการ</p>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/"
+              className="px-3 py-1.5 bg-pink-100 dark:bg-slate-800 hover:bg-pink-200 dark:hover:bg-slate-700 text-pink-600 dark:text-pink-400 text-xs font-bold rounded-xl transition-all flex items-center gap-1 shadow-sm shrink-0"
+            >
+              <span>🏠</span> หน้าแรก
+            </Link>
+            <div>
+              <h1 className="text-base md:text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-400 dark:to-purple-400 flex items-center gap-2">
+                🛒✨ ตลาดนัดวิทยาลัยฟีลกู้ด
+              </h1>
+              <p className="text-xs text-slate-500 dark:text-slate-400">สินค้าคัดพิเศษ น่ารัก น่าใช้ 5 รายการ</p>
+            </div>
           </div>
           <ThemeToggle />
         </header>
