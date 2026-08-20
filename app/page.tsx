@@ -5,10 +5,10 @@ export default function LandingPage() {
     <main className="min-h-screen bg-pink-50/40 dark:bg-slate-950 p-4 md:p-8 flex flex-col items-center justify-center relative overflow-hidden">
       <div className="max-w-2xl w-full space-y-8 text-center relative z-10">
         
-        {/* 🍮 หัวข้อหลัก + ไอคอนเยลลี่ดุ๊กดิ๊ก */}
+        {/* 🏫🛍️ หัวข้อหลัก + ไอคอนตลาดนัดวิทยาลัย */}
         <div className="space-y-3">
           <div className="inline-block text-6xl animate-bounce hover:scale-125 transition-transform cursor-pointer select-none">
-            🍮
+            🏫🛍️
           </div>
           <h1 className="text-3xl md:text-5xl font-black text-slate-800 dark:text-slate-100 flex items-center justify-center gap-2">
             ตลาดยกวิทยเขต 🛍️
