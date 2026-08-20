@@ -1,147 +1,149 @@
 'use client';
 
+import { useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import ThemeToggle from './ThemeToggle';
 
-export default function LandingPage() {
-  // 🏷️ แก้ไขเส้นทางลิงก์หมวดหมู่ให้ชี้ไปที่หน้าหลัก /home
-  const categories = [
-    { name: '📚 หนังสือเรียน', href: '/home?category=books' },
-    { name: '💻 ไอที & อุปกรณ์', href: '/home?category=tech' },
-    { name: '👗 แฟชั่น นศ.', href: '/home?category=fashion' },
-    { name: '🛵 ของใช้หอพัก', href: '/home?category=dorm' },
-  ];
+export const initialProducts = [
+  {
+    id: 1,
+    title: 'iPad Air M1 สภาพนางฟ้า 99%',
+    category: 'tech',
+    price: 13500,
+    tag: '#สภาพนางฟ้า',
+    location: '📍 นัดรับ: ตึกวิศวะ / หอพัก A',
+    seller: 'พี่เกรซ วิศวะ ปี 3',
+    contact: 'https://line.me',
+    image: '📱',
+    description: 'เครื่องใช้น้อยมาก ติดฟิล์มกระดาษแล้ว แถมเคสและปากกาStylus สภาพไร้รอย นัดรับตรวจเช็กเครื่องใน ม. ได้เลยครับ',
+  },
+  {
+    id: 2,
+    title: 'หนังสือ Calculus 1 สภาพดี ไม่มีรอยเขียน',
+    category: 'books',
+    price: 120,
+    tag: '#ส่งต่อถูกๆ',
+    location: '📍 นัดรับ: หอสมุดกลาง',
+    seller: 'น้องนัท บัญชี ปี 1',
+    contact: 'https://line.me',
+    image: '📚',
+    description: 'หนังสือแคลคูลัส 1 สภาพดีมาก ไฮไลต์แค่นิดหน่อย ไม่ขาด ไม่เปียกน้ำ เหมาะกับน้องๆ ที่เตรียมสอบครับ',
+  },
+  {
+    id: 3,
+    title: 'ชุดนิสิตทรงบอย Size L ผ้าหนาไม่บาง',
+    category: 'fashion',
+    price: 150,
+    tag: '#ส่งฟรีหอพัก',
+    location: '📍 นัดรับ: โรงอาหารกลาง',
+    seller: 'มายด์ มนุษยศาสตร์',
+    contact: 'https://line.me',
+    image: '👗',
+    description: 'เสื้อทรงบอย อก 40 นิ้ว ผ้าทรงสวย ไม่ยับง่าย ใส่ไปเรียนแค่ 2 ครั้ง ส่งต่อเพราะไซส์ใหญ่ไปนิดนึงค่ะ',
+  },
+  {
+    id: 4,
+    title: 'ตู้เย็นจิ๋วสำหรับหอพัก ประหยัดไฟ',
+    category: 'dorm',
+    price: 890,
+    tag: '#ส่งฟรีหอพัก',
+    location: '📍 นัดรับ: หน้าหอพัก B',
+    seller: 'พี่ต๊อบ สถาปัตย์ ปี 4',
+    contact: 'https://line.me',
+    image: '🧊',
+    description: 'ตู้เย็นขนาดเล็กแช่เครื่องดื่ม/เครื่องสำอางได้ดี เย็นเร็ว เสียงเบา ประหยัดไฟมาก นัดรับหน้าหอพัก B ได้ครับ',
+  },
+];
+
+function HomeContent() {
+  const searchParams = useSearchParams();
+  const selectedCat = searchParams.get('category') || 'all';
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTag, setActiveTag] = useState('');
+
+  const filteredProducts = initialProducts.filter((item) => {
+    const matchesCategory = selectedCat === 'all' || item.category === selectedCat;
+    const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesTag = activeTag === '' || item.tag === activeTag;
+    return matchesCategory && matchesSearch && matchesTag;
+  });
 
   return (
-    <main className="relative min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-sky-100 dark:from-slate-950 dark:via-purple-950/50 dark:to-slate-900 text-slate-800 dark:text-slate-100 flex flex-col items-center justify-center p-4 overflow-hidden selection:bg-pink-300">
-      
-      {/* 🔮 CSS Custom Animations & 3D Jelly Effects */}
-      <style>{`
-        @keyframes jelly-bounce {
-          0%, 100% { transform: scale(1, 1); }
-          25% { transform: scale(0.92, 1.08) translateY(-4px); }
-          50% { transform: scale(1.08, 0.92) translateY(2px); }
-          75% { transform: scale(0.97, 1.03); }
-        }
-        @keyframes float-orb {
-          0%, 100% { transform: translateY(0px) scale(1); }
-          50% { transform: translateY(-16px) scale(1.05); }
-        }
-        @keyframes marquee {
-          0% { transform: translateX(100%); }
-          100% { transform: translateX(-100%); }
-        }
-        .animate-jelly-loop { animation: jelly-bounce 2.5s infinite ease-in-out; }
-        .animate-float { animation: float-orb 5s infinite ease-in-out; }
-        .animate-marquee { display: inline-block; animation: marquee 14s linear infinite; }
-        .jelly-btn {
-          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-        }
-        .jelly-btn:hover { transform: scale(1.05, 0.95) translateY(-3px); }
-        .jelly-btn:active { transform: scale(0.92, 1.08) translateY(2px); }
-      `}</style>
-
-      {/* 📢 แถบข่าวสารเลื่อนสดด้านบนสุด */}
-      <div className="absolute top-4 w-full max-w-sm bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-full px-4 py-1.5 border border-white/80 dark:border-slate-800 shadow-sm overflow-hidden whitespace-nowrap text-xs text-pink-600 dark:text-pink-300 font-medium z-20">
-        <span className="animate-marquee">
-          🔥 อัปเดตสด: มีเพื่อนลงขาย "iPad Air M1" • "หนังสือ Calc 1 ส่งต่อ 100.-" • "ตู้เย็นหอพักสภาพดี" 🛍️
-        </span>
+    <div className="max-w-4xl mx-auto space-y-6">
+      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl p-4 rounded-3xl border border-pink-100 dark:border-slate-800 shadow-sm space-y-3">
+        <input
+          type="text"
+          placeholder="🔍 ค้นหาสินค้า..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full py-3 px-5 rounded-2xl bg-pink-50/50 dark:bg-slate-800/80 border border-pink-200/60 dark:border-slate-700 text-sm focus:outline-none"
+        />
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+          <span className="text-slate-400 font-bold whitespace-nowrap">แท็ก:</span>
+          {['#สภาพนางฟ้า', '#ส่งฟรีหอพัก', '#ส่งต่อถูกๆ'].map((tag) => (
+            <button
+              key={tag}
+              onClick={() => setActiveTag(activeTag === tag ? '' : tag)}
+              className={`px-3 py-1 rounded-full font-semibold whitespace-nowrap ${
+                activeTag === tag ? 'bg-pink-500 text-white' : 'bg-pink-100/60 dark:bg-slate-800 text-pink-600 dark:text-pink-300'
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* 🌈 แสงไฟเรืองแสงด้านหลัง */}
-      <div className="absolute top-1/4 -left-16 w-72 h-72 bg-pink-300/60 dark:bg-pink-600/20 rounded-full blur-3xl animate-float pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-16 w-80 h-80 bg-purple-300/60 dark:bg-purple-600/20 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '-2.5s' }} />
-
-      {/* 🍬 การ์ดหลักทรงเยลลี่ 3D */}
-      <div className="relative w-full max-w-md bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl rounded-[2.5rem] p-6 md:p-8 
-        shadow-[0_20px_50px_rgba(244,114,182,0.25),0_10px_25px_rgba(168,85,247,0.15),inset_0_2px_4px_rgba(255,255,255,0.9)] 
-        dark:shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_2px_rgba(255,255,255,0.15)] 
-        border border-white/80 dark:border-slate-800/80 flex flex-col items-center text-center space-y-5 z-10 mt-8">
-
-        {/* แถบหัวข้อ & ปุ่มสลับโหมด Theme Toggle */}
-        <div className="w-full flex justify-between items-center pb-3 border-b border-pink-100/80 dark:border-slate-800">
-          <span className="text-[11px] font-extrabold text-pink-500 dark:text-pink-400 tracking-wider uppercase bg-pink-100/80 dark:bg-pink-950/60 px-3 py-1 rounded-full shadow-inner border border-pink-200/50">
-            Campus Marketplace
-          </span>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-400">โหมด:</span>
-            <div className="jelly-btn inline-block">
-              <ThemeToggle />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {filteredProducts.map((product) => (
+          <Link
+            key={product.id}
+            href={`/home/detail?id=${product.id}`}
+            className="group bg-white/90 dark:bg-slate-900/90 rounded-3xl p-5 border border-pink-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-3 cursor-pointer"
+          >
+            <div>
+              <div className="flex justify-between items-start">
+                <span className="text-4xl p-2 bg-pink-50 dark:bg-slate-800 rounded-2xl group-hover:scale-110 transition-transform">
+                  {product.image}
+                </span>
+                <span className="text-xs font-bold text-pink-500 bg-pink-100/80 dark:bg-pink-950/60 px-2.5 py-1 rounded-full">
+                  {product.tag}
+                </span>
+              </div>
+              <h3 className="font-bold text-base mt-3 text-slate-800 dark:text-slate-100 group-hover:text-pink-500 transition-colors">
+                {product.title}
+              </h3>
+              <p className="text-lg font-black text-pink-600 dark:text-pink-400 mt-1">
+                ฿{product.price.toLocaleString()}
+              </p>
+              <div className="mt-2 text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/60 px-2.5 py-1 rounded-lg inline-block">
+                {product.location}
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* 🛍️ โลโก้เยลลี่ 3D + Badge ยืนยันตัวตน นศ. */}
-        <div className="relative group cursor-pointer jelly-btn">
-          <div className="w-20 h-20 bg-gradient-to-tr from-pink-400 via-rose-300 to-purple-400 rounded-[2rem] flex items-center justify-center 
-            shadow-[0_12px_28px_rgba(244,114,182,0.45),inset_0_4px_6px_rgba(255,255,255,0.7),inset_0_-4px_6px_rgba(0,0,0,0.15)] 
-            border-2 border-white/70 animate-jelly-loop">
-            <span className="text-3xl filter drop-shadow-md select-none">🛍️✨</span>
-          </div>
-          <span className="absolute -bottom-2 -right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-2 border-white shadow-sm flex items-center gap-1">
-            ✓ ยืนยัน นศ.
-          </span>
-        </div>
-
-        {/* ข้อความหัวเรื่อง */}
-        <div className="space-y-2">
-          <h1 className="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 dark:from-pink-300 dark:to-purple-300">
-            ตลาดยกวิทยเขตสุดน่ารัก
-          </h1>
-          <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium px-2">
-            แหล่งรวมใจสายช็อป นักศึกษาขายง่าย ส่งต่อไว ปลอดภัย พิกัดโดนใจ! 💖
-          </p>
-        </div>
-
-        {/* 🏷️ ปุ่มหมวดหมู่ด่วนทรงเยลลี่ (ชี้ไปที่ /home) */}
-        <div className="w-full pt-1">
-          <p className="text-[11px] font-bold text-slate-400 mb-2 text-left">หมวดหมู่ยอดฮิต:</p>
-          <div className="grid grid-cols-2 gap-2">
-            {categories.map((cat, idx) => (
-              <Link
-                key={idx}
-                href={cat.href}
-                className="jelly-btn text-xs font-bold py-2 px-3 bg-pink-50/80 dark:bg-slate-800/80 hover:bg-pink-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl border border-pink-200/50 dark:border-slate-700 shadow-sm flex items-center justify-center"
-              >
-                {cat.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* 🔘 ปุ่มดำเนินการหลัก */}
-        <div className="w-full space-y-3 pt-2">
-          <Link
-            href="/home"
-            className="jelly-btn w-full flex items-center justify-center py-3.5 px-6 
-              bg-gradient-to-r from-pink-400 via-rose-400 to-purple-500 hover:from-pink-500 hover:to-purple-600 
-              text-white font-extrabold text-sm rounded-2xl 
-              shadow-[0_10px_22px_rgba(244,114,182,0.4),inset_0_2px_4px_rgba(255,255,255,0.6),inset_0_-3px_0_rgba(0,0,0,0.15)] 
-              border border-white/50"
-          >
-            เข้าสู่หน้าหลัก 🚀
+            <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center text-xs text-slate-400">
+              <span>👤 {product.seller}</span>
+              <span className="text-pink-500 font-bold group-hover:underline">ดูรายละเอียด →</span>
+            </div>
           </Link>
-          
-          <Link
-            href="/product"
-            className="jelly-btn w-full flex items-center justify-center py-3.5 px-6 
-              bg-white/90 dark:bg-slate-800/90 hover:bg-white dark:hover:bg-slate-800 
-              text-slate-700 dark:text-slate-200 font-extrabold text-sm rounded-2xl 
-              shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-3px_0_rgba(0,0,0,0.06)] 
-              dark:shadow-[0_8px_20px_rgba(0,0,0,0.3),inset_0_1px_2px_rgba(255,255,255,0.1)] 
-              border border-pink-100 dark:border-slate-700"
-          >
-            ลงประกาศขายสินค้า 🏷️
-          </Link>
-        </div>
-
-        {/* 👥 ตัวเลขสถิติออนไลน์ */}
-        <div className="pt-2 flex items-center justify-center gap-2 text-[11px] text-slate-400 font-medium">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-          <span>มีนักศึกษาออนไลน์อยู่ <b>142 คน</b> ในขณะนี้</span>
-        </div>
-
+        ))}
       </div>
+    </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <main className="min-h-screen bg-pink-50/30 dark:bg-slate-950 p-4 md:p-8">
+      <div className="max-w-4xl mx-auto mb-6 flex justify-between items-center">
+        <Link href="/" className="text-xs font-bold text-pink-600 hover:underline">
+          ← กลับหน้าแรก
+        </Link>
+        <h1 className="text-lg font-black text-slate-800 dark:text-slate-100">ตลาดสินค้า นศ. 🛍️</h1>
+      </div>
+      <Suspense fallback={<div className="text-center py-8 text-xs text-slate-400">กำลังโหลด...</div>}>
+        <HomeContent />
+      </Suspense>
     </main>
   );
 }
