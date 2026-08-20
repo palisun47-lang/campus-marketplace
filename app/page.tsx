@@ -67,7 +67,6 @@ export default function LandingPage() {
             border-2 border-white/70 animate-jelly-loop">
             <span className="text-4xl filter drop-shadow-md select-none">🛍️✨</span>
           </div>
-          {/* เงาสะท้อนใต้อิโมจิ */}
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-16 h-3 bg-pink-400/30 rounded-full blur-md" />
         </div>
 
@@ -81,9 +80,9 @@ export default function LandingPage() {
           </p>
         </div>
 
-        {/* 🔘 ปุ่มกดเยลลี่นูน 3D (Jelly Buttons) */}
+        {/* 🔘 ปุ่มกดเยลลี่นูน 3D */}
         <div className="w-full space-y-3.5 pt-2">
-          {/* ปุ่มหลัก */}
+          {/* ปุ่มเข้าสู่หน้าหลัก */}
           <Link
             href="/home"
             className="jelly-btn w-full flex items-center justify-center py-4 px-6 
@@ -95,7 +94,7 @@ export default function LandingPage() {
             เข้าสู่หน้าหลัก 🚀
           </Link>
           
-          {/* ปุ่มรอง */}
+          {/* ปุ่มลงประกาศขายสินค้า (อัปเดตข้อความและลิงก์แล้ว) */}
           <Link
             href="/product"
             className="jelly-btn w-full flex items-center justify-center py-4 px-6 
@@ -105,7 +104,7 @@ export default function LandingPage() {
               dark:shadow-[0_8px_20px_rgba(0,0,0,0.3),inset_0_1px_2px_rgba(255,255,255,0.1)] 
               border border-pink-100 dark:border-slate-700 tracking-wide"
           >
-            ดูสินค้าทั้งหมด 📦
+            ลงประกาศขายสินค้า 🏷️
           </Link>
         </div>
 
