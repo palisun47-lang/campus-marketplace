@@ -4,12 +4,12 @@ import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 
 export default function LandingPage() {
-  // 🏷️ รายการหมวดหมู่ยอดฮิต (จะพาส่งไปยังหน้าสินค้า /product พร้อมกรองหมวดหมู่)
+  // 🏷️ แก้ไขเส้นทางลิงก์หมวดหมู่ให้ชี้ไปที่หน้าหลัก /home
   const categories = [
-    { name: '📚 หนังสือเรียน', href: '/product?category=books' },
-    { name: '💻 ไอที & อุปกรณ์', href: '/product?category=tech' },
-    { name: '👗 แฟชั่น นศ.', href: '/product?category=fashion' },
-    { name: '🛵 ของใช้หอพัก', href: '/product?category=dorm' },
+    { name: '📚 หนังสือเรียน', href: '/home?category=books' },
+    { name: '💻 ไอที & อุปกรณ์', href: '/home?category=tech' },
+    { name: '👗 แฟชั่น นศ.', href: '/home?category=fashion' },
+    { name: '🛵 ของใช้หอพัก', href: '/home?category=dorm' },
   ];
 
   return (
@@ -41,18 +41,18 @@ export default function LandingPage() {
         .jelly-btn:active { transform: scale(0.92, 1.08) translateY(2px); }
       `}</style>
 
-      {/* 📢 แถบข่าวสารเลื่อนสดด้านบนสุด (Marquee Ticker) */}
+      {/* 📢 แถบข่าวสารเลื่อนสดด้านบนสุด */}
       <div className="absolute top-4 w-full max-w-sm bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-full px-4 py-1.5 border border-white/80 dark:border-slate-800 shadow-sm overflow-hidden whitespace-nowrap text-xs text-pink-600 dark:text-pink-300 font-medium z-20">
         <span className="animate-marquee">
           🔥 อัปเดตสด: มีเพื่อนลงขาย "iPad Air M1" • "หนังสือ Calc 1 ส่งต่อ 100.-" • "ตู้เย็นหอพักสภาพดี" 🛍️
         </span>
       </div>
 
-      {/* 🌈 แสงไฟเรืองแสงด้านหลัง (Ambient Background) */}
+      {/* 🌈 แสงไฟเรืองแสงด้านหลัง */}
       <div className="absolute top-1/4 -left-16 w-72 h-72 bg-pink-300/60 dark:bg-pink-600/20 rounded-full blur-3xl animate-float pointer-events-none" />
       <div className="absolute bottom-1/4 -right-16 w-80 h-80 bg-purple-300/60 dark:bg-purple-600/20 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '-2.5s' }} />
 
-      {/* 🍬 การ์ดหลักทรงเยลลี่ 3D (Claymorphism Card) */}
+      {/* 🍬 การ์ดหลักทรงเยลลี่ 3D */}
       <div className="relative w-full max-w-md bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl rounded-[2.5rem] p-6 md:p-8 
         shadow-[0_20px_50px_rgba(244,114,182,0.25),0_10px_25px_rgba(168,85,247,0.15),inset_0_2px_4px_rgba(255,255,255,0.9)] 
         dark:shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_2px_rgba(255,255,255,0.15)] 
@@ -93,7 +93,7 @@ export default function LandingPage() {
           </p>
         </div>
 
-        {/* 🏷️ ปุ่มหมวดหมู่ด่วนทรงเยลลี่ (Quick Categories) */}
+        {/* 🏷️ ปุ่มหมวดหมู่ด่วนทรงเยลลี่ (ชี้ไปที่ /home) */}
         <div className="w-full pt-1">
           <p className="text-[11px] font-bold text-slate-400 mb-2 text-left">หมวดหมู่ยอดฮิต:</p>
           <div className="grid grid-cols-2 gap-2">
@@ -109,7 +109,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* 🔘 ปุ่มดำเนินการหลัก (Main Buttons) */}
+        {/* 🔘 ปุ่มดำเนินการหลัก */}
         <div className="w-full space-y-3 pt-2">
           <Link
             href="/home"
