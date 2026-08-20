@@ -4,18 +4,18 @@ import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 
 export default function LandingPage() {
-  // 🏷️ รายการหมวดหมู่ยอดฮิตทรงเยลลี่
+  // 🏷️ รายการหมวดหมู่ยอดฮิต (จะพาส่งไปยังหน้าสินค้า /product พร้อมกรองหมวดหมู่)
   const categories = [
-    { name: '📚 หนังสือเรียน', href: '/product?cat=books' },
-    { name: '💻 ไอที & อุปกรณ์', href: '/product?cat=tech' },
-    { name: '👗 แฟชั่น นศ.', href: '/product?cat=fashion' },
-    { name: '🛵 ของใช้หอพัก', href: '/product?cat=dorm' },
+    { name: '📚 หนังสือเรียน', href: '/product?category=books' },
+    { name: '💻 ไอที & อุปกรณ์', href: '/product?category=tech' },
+    { name: '👗 แฟชั่น นศ.', href: '/product?category=fashion' },
+    { name: '🛵 ของใช้หอพัก', href: '/product?category=dorm' },
   ];
 
   return (
     <main className="relative min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-sky-100 dark:from-slate-950 dark:via-purple-950/50 dark:to-slate-900 text-slate-800 dark:text-slate-100 flex flex-col items-center justify-center p-4 overflow-hidden selection:bg-pink-300">
       
-      {/* 🔮 CSS Keyframes & Jelly Styles */}
+      {/* 🔮 CSS Custom Animations & 3D Jelly Effects */}
       <style>{`
         @keyframes jelly-bounce {
           0%, 100% { transform: scale(1, 1); }
@@ -37,28 +37,28 @@ export default function LandingPage() {
         .jelly-btn {
           transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
         }
-        .jelly-btn:hover { transform: scale(1.06, 0.94) translateY(-3px); }
+        .jelly-btn:hover { transform: scale(1.05, 0.95) translateY(-3px); }
         .jelly-btn:active { transform: scale(0.92, 1.08) translateY(2px); }
       `}</style>
 
-      {/* 📢 1. แถบข่าวสารวิ่งสด (Live Activity Ticker) */}
-      <div className="absolute top-4 w-full max-w-sm bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-full px-4 py-1.5 border border-white/80 dark:border-slate-800 shadow-sm overflow-hidden whitespace-nowrap text-xs text-pink-600 dark:text-pink-300 font-medium z-20">
+      {/* 📢 แถบข่าวสารเลื่อนสดด้านบนสุด (Marquee Ticker) */}
+      <div className="absolute top-4 w-full max-w-sm bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-full px-4 py-1.5 border border-white/80 dark:border-slate-800 shadow-sm overflow-hidden whitespace-nowrap text-xs text-pink-600 dark:text-pink-300 font-medium z-20">
         <span className="animate-marquee">
           🔥 อัปเดตสด: มีเพื่อนลงขาย "iPad Air M1" • "หนังสือ Calc 1 ส่งต่อ 100.-" • "ตู้เย็นหอพักสภาพดี" 🛍️
         </span>
       </div>
 
-      {/* 🌈 แสงไฟเรืองแสงด้านหลัง */}
+      {/* 🌈 แสงไฟเรืองแสงด้านหลัง (Ambient Background) */}
       <div className="absolute top-1/4 -left-16 w-72 h-72 bg-pink-300/60 dark:bg-pink-600/20 rounded-full blur-3xl animate-float pointer-events-none" />
       <div className="absolute bottom-1/4 -right-16 w-80 h-80 bg-purple-300/60 dark:bg-purple-600/20 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '-2.5s' }} />
 
-      {/* 🍬 การ์ดหลักทรงเยลลี่ 3D */}
+      {/* 🍬 การ์ดหลักทรงเยลลี่ 3D (Claymorphism Card) */}
       <div className="relative w-full max-w-md bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl rounded-[2.5rem] p-6 md:p-8 
         shadow-[0_20px_50px_rgba(244,114,182,0.25),0_10px_25px_rgba(168,85,247,0.15),inset_0_2px_4px_rgba(255,255,255,0.9)] 
         dark:shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_2px_rgba(255,255,255,0.15)] 
         border border-white/80 dark:border-slate-800/80 flex flex-col items-center text-center space-y-5 z-10 mt-8">
 
-        {/* Header & Mode Switch */}
+        {/* แถบหัวข้อ & ปุ่มสลับโหมด Theme Toggle */}
         <div className="w-full flex justify-between items-center pb-3 border-b border-pink-100/80 dark:border-slate-800">
           <span className="text-[11px] font-extrabold text-pink-500 dark:text-pink-400 tracking-wider uppercase bg-pink-100/80 dark:bg-pink-950/60 px-3 py-1 rounded-full shadow-inner border border-pink-200/50">
             Campus Marketplace
@@ -71,7 +71,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* 🛍️ 2. โลโก้ 3D พร้อม Badge ยืนยันตัวตน นศ. */}
+        {/* 🛍️ โลโก้เยลลี่ 3D + Badge ยืนยันตัวตน นศ. */}
         <div className="relative group cursor-pointer jelly-btn">
           <div className="w-20 h-20 bg-gradient-to-tr from-pink-400 via-rose-300 to-purple-400 rounded-[2rem] flex items-center justify-center 
             shadow-[0_12px_28px_rgba(244,114,182,0.45),inset_0_4px_6px_rgba(255,255,255,0.7),inset_0_-4px_6px_rgba(0,0,0,0.15)] 
@@ -83,7 +83,7 @@ export default function LandingPage() {
           </span>
         </div>
 
-        {/* หัวข้อ & ข้อความ */}
+        {/* ข้อความหัวเรื่อง */}
         <div className="space-y-2">
           <h1 className="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 dark:from-pink-300 dark:to-purple-300">
             ตลาดยกวิทยเขตสุดน่ารัก
@@ -93,7 +93,7 @@ export default function LandingPage() {
           </p>
         </div>
 
-        {/* 🏷️ 3. ปุ่มหมวดหมู่ด่วนทรงเยลลี่จิ๋ว (Quick Categories) */}
+        {/* 🏷️ ปุ่มหมวดหมู่ด่วนทรงเยลลี่ (Quick Categories) */}
         <div className="w-full pt-1">
           <p className="text-[11px] font-bold text-slate-400 mb-2 text-left">หมวดหมู่ยอดฮิต:</p>
           <div className="grid grid-cols-2 gap-2">
@@ -109,7 +109,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* 🔘 ปุ่มกดเยลลี่นูน 3D หลัก */}
+        {/* 🔘 ปุ่มดำเนินการหลัก (Main Buttons) */}
         <div className="w-full space-y-3 pt-2">
           <Link
             href="/home"
@@ -135,7 +135,7 @@ export default function LandingPage() {
           </Link>
         </div>
 
-        {/* 👥 4. สถิติผู้ใช้งานแบบเรียลไทม์ (Live Stats) */}
+        {/* 👥 ตัวเลขสถิติออนไลน์ */}
         <div className="pt-2 flex items-center justify-center gap-2 text-[11px] text-slate-400 font-medium">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
           <span>มีนักศึกษาออนไลน์อยู่ <b>142 คน</b> ในขณะนี้</span>
