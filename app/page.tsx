@@ -2,12 +2,15 @@ import Link from 'next/link';
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-pink-50/40 dark:bg-slate-950 p-4 md:p-8 flex flex-col items-center justify-center">
-      <div className="max-w-2xl w-full space-y-8 text-center">
+    <main className="min-h-screen bg-pink-50/40 dark:bg-slate-950 p-4 md:p-8 flex flex-col items-center justify-center relative overflow-hidden">
+      <div className="max-w-2xl w-full space-y-8 text-center relative z-10">
         
-        {/* หัวข้อหลัก */}
+        {/* 🍮 หัวข้อหลัก + ไอคอนเยลลี่ดุ๊กดิ๊ก */}
         <div className="space-y-3">
-          <h1 className="text-3xl md:text-5xl font-black text-slate-800 dark:text-slate-100">
+          <div className="inline-block text-6xl animate-bounce hover:scale-125 transition-transform cursor-pointer select-none">
+            🍮
+          </div>
+          <h1 className="text-3xl md:text-5xl font-black text-slate-800 dark:text-slate-100 flex items-center justify-center gap-2">
             ตลาดยกวิทยเขต 🛍️
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
@@ -15,7 +18,7 @@ export default function LandingPage() {
           </p>
         </div>
 
-        {/* หมวดหมู่อยอดฮิต (แก้ไขลิงก์ให้กรองสินค้าตามหมวดหมู่) */}
+        {/* หมวดหมู่อยอดฮิต */}
         <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl p-6 rounded-3xl border border-pink-100 dark:border-slate-800 shadow-sm space-y-4">
           <h2 className="text-left font-bold text-slate-700 dark:text-slate-200 text-sm">
             หมวดหมู่อยอดฮิต:
