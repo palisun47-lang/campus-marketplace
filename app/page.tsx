@@ -1,16 +1,39 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import ThemeToggle from './ThemeToggle';
 
 export default function LandingPage() {
+  const [isDark, setIsDark] = useState(false);
+
+  // เช็กสภาพโหมดปัจจุบันเมื่อโหลดหน้าเว็บ
+  useEffect(() => {
+    if (document.documentElement.classList.contains('dark')) {
+      setIsDark(true);
+    }
+  }, []);
+
+  // ฟังก์ชันสลับ Light / Dark Mode
+  const toggleTheme = () => {
+    if (isDark) {
+      document.documentElement.classList.remove('dark');
+      setIsDark(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      setIsDark(true);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-pink-50/30 dark:bg-slate-950 p-4 md:p-8 flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-300">
       
-      {/* 🌙/☀️ ปุ่มเปลี่ยน Dark/Light Mode มุมขวาบน */}
-      <div className="absolute top-4 right-4 md:top-6 md:right-6 z-10">
-        <ThemeToggle />
-      </div>
+      {/* 🌙/☀️ ปุ่มเปลี่ยน Dark/Light Mode เด่นๆ มุมขวาบน */}
+      <button
+        onClick={toggleTheme}
+        className="absolute top-4 right-4 md:top-6 md:right-6 z-50 flex items-center gap-2 px-4 py-2 bg-white/90 dark:bg-slate-800/90 border-2 border-pink-200 dark:border-slate-700 rounded-full shadow-md hover:scale-105 active:scale-95 transition-all text-xs font-bold text-slate-700 dark:text-slate-200 cursor-pointer"
+      >
+        <span>{isDark ? '🌙 โหมดมืด' : '☀️ โหมดสว่าง'}</span>
+      </button>
 
       <div className="max-w-md w-full space-y-8 text-center">
         
@@ -74,74 +97,6 @@ export default function LandingPage() {
           <Link
             href="/product"
             className="py-3.5 px-6 bg-white dark:bg-slate-900 border-2 border-pink-300 dark:border-slate-700 text-pink-600 dark:text-pink-400 font-extrabold text-sm rounded-2xl hover:bg-pink-50 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-2 active:scale-95 shadow-sm"
-          >
-            ลงประกาศขาย 🏷️
-          </Link>
-        </div>
-
-      </div>
-    </main>
-  );
-}
-              {/* 3. เงาใต้เยลลี่ด้านล่าง */}
-              <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-2/3 h-2 bg-pink-500/25 rounded-full blur-sm" />
-            </div>
-
-          </div>
-
-          {/* หัวข้อหลัก */}
-          <h1 className="text-3xl md:text-5xl font-black text-slate-800 dark:text-slate-100 flex items-center justify-center gap-2">
-            ตลาดยกวิทยเขต 🛍️
-          </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
-            ศูนย์รวมซื้อ-ขาย แลกเปลี่ยนของใช้นักศึกษา นัดรับง่าย ปลอดภัย
-          </p>
-        </div>
-
-        {/* หมวดหมู่อยอดฮิต */}
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl p-6 rounded-3xl border border-pink-100 dark:border-slate-800 shadow-sm space-y-4">
-          <h2 className="text-left font-bold text-slate-700 dark:text-slate-200 text-sm">
-            หมวดหมู่อยอดฮิต:
-          </h2>
-          <div className="grid grid-cols-2 gap-3">
-            <Link
-              href="/home?category=books"
-              className="p-4 rounded-2xl bg-pink-50/60 dark:bg-slate-800/60 border border-pink-100 dark:border-slate-700 hover:bg-pink-100/60 transition-all flex items-center justify-center gap-2 font-bold text-xs text-slate-700 dark:text-slate-200"
-            >
-              📚 หนังสือเรียน
-            </Link>
-            <Link
-              href="/home?category=tech"
-              className="p-4 rounded-2xl bg-pink-50/60 dark:bg-slate-800/60 border border-pink-100 dark:border-slate-700 hover:bg-pink-100/60 transition-all flex items-center justify-center gap-2 font-bold text-xs text-slate-700 dark:text-slate-200"
-            >
-              💻 ไอที & อุปกรณ์
-            </Link>
-            <Link
-              href="/home?category=fashion"
-              className="p-4 rounded-2xl bg-pink-50/60 dark:bg-slate-800/60 border border-pink-100 dark:border-slate-700 hover:bg-pink-100/60 transition-all flex items-center justify-center gap-2 font-bold text-xs text-slate-700 dark:text-slate-200"
-            >
-              👗 แฟชั่น นศ.
-            </Link>
-            <Link
-              href="/home?category=dorm"
-              className="p-4 rounded-2xl bg-pink-50/60 dark:bg-slate-800/60 border border-pink-100 dark:border-slate-700 hover:bg-pink-100/60 transition-all flex items-center justify-center gap-2 font-bold text-xs text-slate-700 dark:text-slate-200"
-            >
-              🛵 ของใช้หอพัก
-            </Link>
-          </div>
-        </div>
-
-        {/* ปุ่มเมนูหลัก */}
-        <div className="flex gap-3">
-          <Link
-            href="/home"
-            className="flex-1 py-3.5 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-extrabold text-sm rounded-2xl shadow-md hover:opacity-95 transition-all text-center"
-          >
-            เข้าสู่หน้าตลาด 🛒
-          </Link>
-          <Link
-            href="/product"
-            className="flex-1 py-3.5 bg-white dark:bg-slate-900 text-pink-600 dark:text-pink-400 border border-pink-200 dark:border-slate-700 font-extrabold text-sm rounded-2xl shadow-sm hover:bg-pink-50 transition-all text-center"
           >
             ลงประกาศขาย 🏷️
           </Link>
