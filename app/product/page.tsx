@@ -88,13 +88,15 @@ export default function AddProductPage() {
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="font-bold text-slate-600 dark:text-slate-300">3. ราคา (บาท) *</label>
+                  {/* แก้ไขช่องพิมพ์ราคาให้พิมพ์ได้ฟรีสไตล์เฉพาะตัวเลข */}
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     required
                     placeholder="เช่น 150, 1200"
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    className="w-full p-3 rounded-2xl bg-pink-50/40 dark:bg-slate-800 border border-pink-100 dark:border-slate-700 focus:outline-none focus:border-pink-400"
+                    onChange={(e) => setPrice(e.target.value.replace(/[^0-9]/g, ''))}
+                    className="w-full p-3 rounded-2xl bg-pink-50/40 dark:bg-slate-800 border border-pink-100 dark:border-slate-700 focus:outline-none focus:border-pink-400 font-medium"
                   />
                 </div>
                 <div className="space-y-1">
