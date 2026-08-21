@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const emojiList = ['📱', '💻', '📚', '👗', '🛵', '🎧', '🍲', '🖥️', '⌨️', '🥻', '🛋️', '🧊', '👟', '📖', '👔'];
 const locationPresets = ['โรงอาหารกลาง', 'หอสมุดกลาง', 'ตึกวิศวะ', 'ตึกบริหารธุรกิจ', 'หน้าหอพัก A/B'];
 const tagPresets = ['#สภาพนางฟ้า', '#ส่งฟรีหอพัก', '#ส่งต่อถูกๆ'];
 
 export default function AddProductPage() {
+  const router = Router();
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('books');
@@ -21,6 +23,27 @@ export default function AddProductPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // สร้างออบเจกต์สินค้าใหม่
+    const newProduct = {
+      id: Date.now().toString(),
+      title,
+      price: Number(price),
+      category,
+      tag,
+      location,
+      seller,
+      contact,
+      description,
+      emoji: selectedEmoji,
+      createdAt: new Date().toISOString(),
+    };
+
+    // ดึงสินค้าเดิมใน localStorage แล้วเซฟสินค้าใหม่ต่อท้ายลงไป
+    const existingProducts = JSON.parse(localStorage.getItem('products') || '[]');
+    const updatedProducts = [newProduct, ...existingProducts];
+    localStorage.setItem('products', JSON.stringify(updatedProducts));
+
     setIsSubmitted(true);
   };
 
@@ -40,19 +63,15 @@ export default function AddProductPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
           
-          {/* 📝 ฟอร์มกรอกข้อมูล (ฝั่งซ้าย) */}
+          {/* 📝 ฟอร์มกรอกข้อมูล */}
           <div className="md:col-span-7 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-6 rounded-3xl border border-pink-100 dark:border-slate-800 shadow-sm space-y-5">
             <h1 className="text-xl font-black text-slate-800 dark:text-slate-100 flex items-center gap-2">
               🏷️ ลงประกาศขายสินค้า
             </h1>
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-              
-              {/* เลือกไอคอนสินค้า */}
               <div className="space-y-2">
-                <label className="font-bold text-slate-600 dark:text-slate-300">
-                  1. เลือกไอคอนแทนรูปสินค้า:
-                </label>
+                <label className="font-bold text-slate-600 dark:text-slate-300">1. เลือกไอคอนแทนรูปสินค้า:</label>
                 <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                   {emojiList.map((emoji) => (
                     <button
@@ -71,24 +90,21 @@ export default function AddProductPage() {
                 </div>
               </div>
 
-              {/* ชื่อสินค้า */}
               <div className="space-y-1">
                 <label className="font-bold text-slate-600 dark:text-slate-300">2. ชื่อสินค้าที่ต้องการขาย *</label>
                 <input
                   type="text"
                   required
-                  placeholder="เช่น iPad Air M1, หนังสือ Calculus, ตู้เย็นจิ๋ว..."
+                  placeholder="เช่น iPad Air M1, หนังสือ Calculus..."
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="w-full p-3 rounded-2xl bg-pink-50/40 dark:bg-slate-800 border border-pink-100 dark:border-slate-700 focus:outline-none focus:border-pink-400"
                 />
               </div>
 
-              {/* ราคา & หมวดหมู่ */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="font-bold text-slate-600 dark:text-slate-300">3. ราคา (บาท) *</label>
-                  {/* แก้ไขช่องพิมพ์ราคาให้พิมพ์ได้ฟรีสไตล์เฉพาะตัวเลข */}
                   <input
                     type="text"
                     inputMode="numeric"
@@ -114,7 +130,6 @@ export default function AddProductPage() {
                 </div>
               </div>
 
-              {/* เลือกแท็กสินค้า */}
               <div className="space-y-1.5">
                 <label className="font-bold text-slate-600 dark:text-slate-300">5. แท็กสินค้า:</label>
                 <div className="flex gap-2">
@@ -133,7 +148,6 @@ export default function AddProductPage() {
                 </div>
               </div>
 
-              {/* สถานที่นัดรับด่วน */}
               <div className="space-y-1.5">
                 <label className="font-bold text-slate-600 dark:text-slate-300">6. จุดนัดรับใน ม.:</label>
                 <div className="flex flex-wrap gap-1.5">
@@ -154,7 +168,6 @@ export default function AddProductPage() {
                 </div>
               </div>
 
-              {/* ข้อมูลผู้ขาย & ช่องทางติดต่อ */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="font-bold text-slate-600 dark:text-slate-300">7. ชื่อผู้ขาย / สาขา *</label>
@@ -180,12 +193,11 @@ export default function AddProductPage() {
                 </div>
               </div>
 
-              {/* รายละเอียดเพิ่มเติม */}
               <div className="space-y-1">
                 <label className="font-bold text-slate-600 dark:text-slate-300">9. รายละเอียดสินค้า</label>
                 <textarea
                   rows={3}
-                  placeholder="บอกสภาพสินค้า สภาพการใช้งาน เหตุผลที่ส่งต่อ..."
+                  placeholder="บอกสภาพสินค้า สภาพการใช้งาน..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   className="w-full p-3 rounded-2xl bg-pink-50/40 dark:bg-slate-800 border border-pink-100 dark:border-slate-700 focus:outline-none focus:border-pink-400"
@@ -201,26 +213,22 @@ export default function AddProductPage() {
             </form>
           </div>
 
-          {/* 👁️ Live Preview การ์ดแสดงผลสด (ฝั่งขวา) */}
+          {/* Live Preview */}
           <div className="md:col-span-5 space-y-3 sticky top-4">
             <div className="flex items-center justify-between text-xs font-bold text-slate-500 px-1">
-              <span>👁️ ตัวอย่างประกาศที่จะแสดงบนหน้าเว็บ:</span>
+              <span>👁️ ตัวอย่างประกาศ:</span>
               <span className="text-pink-500 animate-pulse">• เรียลไทม์</span>
             </div>
 
             <div className="bg-white/90 dark:bg-slate-900/90 rounded-3xl p-5 border-2 border-pink-300 dark:border-slate-700 shadow-md space-y-3">
               <div className="flex justify-between items-start">
-                <span className="text-5xl p-3 bg-pink-50 dark:bg-slate-800 rounded-2xl animate-bounce">
-                  {selectedEmoji}
-                </span>
-                <span className="text-xs font-bold text-pink-500 bg-pink-100/80 px-3 py-1 rounded-full">
-                  {tag}
-                </span>
+                <span className="text-5xl p-3 bg-pink-50 dark:bg-slate-800 rounded-2xl">{selectedEmoji}</span>
+                <span className="text-xs font-bold text-pink-500 bg-pink-100/80 px-3 py-1 rounded-full">{tag}</span>
               </div>
 
               <div className="space-y-1">
                 <h3 className="font-bold text-base text-slate-800 dark:text-slate-100">
-                  {title || 'ชื่อสินค้าของคุณจะแสดงตรงนี้...'}
+                  {title || 'ชื่อสินค้าของคุณ...'}
                 </h3>
                 <p className="text-xl font-black text-pink-600 dark:text-pink-400">
                   ฿{price ? Number(price).toLocaleString() : '0'}
@@ -246,32 +254,30 @@ export default function AddProductPage() {
 
       </div>
 
-      {/* 🎉 Modal แจ้งเตือนเมื่อลงประกาศสำเร็จ */}
+      {/* Modal สำเร็จ */}
       {isSubmitted && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl border border-pink-200 animate-in fade-in zoom-in">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl border border-pink-200">
             <div className="text-6xl animate-bounce">🎉</div>
             <h2 className="text-xl font-black text-slate-800 dark:text-slate-100">ลงประกาศสำเร็จแล้ว!</h2>
             <p className="text-xs text-slate-500">
-              สินค้าของคุณถูกลงประกาศในตลาดวิทยเขตเรียบร้อยแล้ว เพื่อนๆ ใน ม. สามารถทักแชตหานัดรับได้ทันที
+              สินค้าของคุณถูกบันทึกเรียบร้อย และจะไปแสดงที่หน้าตลาดทันที
             </p>
             <div className="pt-2 space-y-2">
               <Link
                 href="/home"
                 className="block w-full py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-extrabold text-xs rounded-xl shadow-md"
               >
-                🛒 ไปดูสินค้าที่หน้าตลาด
+                🛒 ไปดูสินค้าที่หน้าตลาดทันที
               </Link>
-              <button
-                onClick={() => setIsSubmitted(false)}
-                className="block w-full py-2.5 text-xs font-bold text-slate-400 hover:text-slate-600"
-              >
-                ➕ ลงขายสินค้าเพิ่มอีกชิ้น
-              </button>
             </div>
           </div>
         </div>
       )}
     </main>
   );
+}
+
+function Router() {
+  return useRouter();
 }
