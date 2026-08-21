@@ -3,13 +3,45 @@ import Link from 'next/link';
 export default function LandingPage() {
   return (
     <main className="min-h-screen bg-pink-50/40 dark:bg-slate-950 p-4 md:p-8 flex flex-col items-center justify-center relative overflow-hidden">
+      
+      {/* 🍮 CSS การดึ๋งแบบเยลลี่ (Squish & Stretch) */}
+      <style>{`
+        @keyframes jellyBounce {
+          0%, 100% { transform: scale(1, 1) translateY(0); }
+          25% { transform: scale(1.2, 0.8) translateY(6px); }   /* ยุบตัวแบนออก */
+          50% { transform: scale(0.82, 1.18) translateY(-16px); } /* ยืดตัวสูงเด้งขึ้น */
+          70% { transform: scale(1.08, 0.92) translateY(2px); }  /* ดึ๋งกลับเบาๆ */
+          85% { transform: scale(0.96, 1.04) translateY(-1px); }
+        }
+        .animate-jelly {
+          animation: jellyBounce 2.2s infinite ease-in-out;
+        }
+      `}</style>
+
       <div className="max-w-2xl w-full space-y-8 text-center relative z-10">
         
-        {/* 🏫🛍️ หัวข้อหลัก + ไอคอนตลาดนัดวิทยาลัย */}
-        <div className="space-y-3">
-          <div className="inline-block text-6xl animate-bounce hover:scale-125 transition-transform cursor-pointer select-none">
-            🏫🛍️
+        {/* 🏫🛍️ กรอบเยลลี่เงาๆ แวววาว + ไอคอนตลาดยกวิทยเขต */}
+        <div className="space-y-4">
+          <div className="inline-block relative cursor-pointer select-none group">
+            
+            {/* ตัวกรอบเยลลี่แบบวุ้นใส (Glassmorphism & Glossy Glow) */}
+            <div className="animate-jelly relative inline-flex items-center justify-center px-7 py-4 rounded-[32px] bg-gradient-to-b from-white/90 via-pink-100/70 to-pink-300/50 border-2 border-white/90 shadow-[0_12px_30px_-4px_rgba(244,63,94,0.4)] backdrop-blur-md transition-transform active:scale-90">
+              
+              {/* 1. เงาสะท้อนแสงแวววาวด้านบน (Glossy Highlight) */}
+              <div className="absolute top-1.5 left-3 right-3 h-3 bg-gradient-to-b from-white/90 to-transparent rounded-full pointer-events-none" />
+              
+              {/* 2. ตัวไอคอนวิทยาลัย + ถุงช้อปปิ้ง */}
+              <span className="text-5xl md:text-6xl filter drop-shadow-sm group-hover:scale-110 transition-transform">
+                🏫🛍️
+              </span>
+
+              {/* 3. เงาใต้เยลลี่ด้านล่าง */}
+              <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-2/3 h-2 bg-pink-500/25 rounded-full blur-sm" />
+            </div>
+
           </div>
+
+          {/* หัวข้อหลัก */}
           <h1 className="text-3xl md:text-5xl font-black text-slate-800 dark:text-slate-100 flex items-center justify-center gap-2">
             ตลาดยกวิทยเขต 🛍️
           </h1>
